@@ -2,11 +2,14 @@ import { test, expect } from '@playwright/test';
 //import { link } from 'node:fs';
 //import { exit } from 'node:process';
 
-test.describe('Пробные тесты разного шлака', () => {
+test.describe('Тесты сайта gunnerxxx', () => {
+  //группировка тестов
   test.beforeEach(async ({ page }) => {
+    //Это hook который выполнится перед каждым тестом чтобы не повторять его
     await page.goto('http://gunnerxxx.ru/');
   });
   test('Проверка элементов на главной странице gunnerxxx', async ({ page }) => {
+    //test.page;
     await expect(page.getByRole('list')).toContainText('Главная страница');
     await expect(page.getByRole('list')).toContainText('Исторические справки');
     await expect(page.getByRole('list')).toContainText('Услуги');
@@ -44,17 +47,20 @@ test.describe('Пробные тесты разного шлака', () => {
     await page.getByRole('link', { name: 'Форум' }).click();
     await page.close();
   });
+});
 
-  test('Проверка переключения light-mode', async ({ page }) => {
+test.describe('Тесты сайта playwright', () => {
+  test.beforeEach(async ({ page }) => {
+    //Это hook который выполнится перед каждым тестом чтобы не повторять его
     await page.goto('https://playwright.dev/');
+  });
+  test('Проверка переключения light-mode', async ({ page }) => {
     await page.getByRole('button', { name: 'Switch between dark and light' }).dblclick();
 
-    //await page.close();
+    await page.close();
   });
 
   test('Проверка кнопки Get Started ', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
-
     await expect(page.getByRole('link', { name: 'Get started' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Get started' })).toContainText('Get started');
     await expect(page.getByRole('link', { name: 'Get started' })).toHaveAttribute(
